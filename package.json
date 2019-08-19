@@ -1,0 +1,11 @@
+{
+  "name": "code-build-serverless",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/node": "*",
+    "@aws-cdk/core": "*",
+    "@aws-cdk/aws-iam": "*",
+    "@aws-cdk/aws-ecr": "*"
+  }
+}
