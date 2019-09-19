@@ -43,5 +43,6 @@ cat > test.erl <<EOF
 -export([main/1]).
 main(_) -> io:format("==> Hello World!~n").
 EOF
+erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell | grep '"20"' || exit 1
 erlc test.erl
 escript test.erl
