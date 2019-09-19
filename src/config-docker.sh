@@ -3,7 +3,25 @@ set -eu
 
 echo "==> spawn docker daemon"
 
-/usr/local/bin/dind dockerd \
+##
+## hack to run docker inside docker
+## See
+##   https://raw.githubusercontent.com/docker/docker/master/hack/dind
+##   https://github.com/duffqiu/dind
+if [ -d /sys/kernel/security ] && ! mountpoint -q /sys/kernel/security; then
+	mount -t securityfs none /sys/kernel/security || {
+		echo >&2 'Could not mount /sys/kernel/security.'
+		echo >&2 'AppArmor detection and --privileged mode might break.'
+	}
+fi
+
+if ! mountpoint -q /tmp; then
+	mount -t tmpfs none /tmp
+fi
+
+##
+##
+dockerd \
 	--host=unix:///var/run/docker.sock \
 	--host=tcp://0.0.0.0:2375 &>/var/log/docker.log &
 

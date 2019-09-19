@@ -17,9 +17,9 @@ EOF
 ts-node --version | grep 'v8' || exit 1
 
 cat <<EOF
-==> test aws-cdk 1.4.x
+==> test aws-cdk 1.8.x
 EOF
-cdk --version | grep '1.4.[0-9]' || exit 1
+cdk --version | grep '1.8.[0-9]' || exit 1
 
 cat <<EOF
 ==> test aws-cli 1.16.x
@@ -35,6 +35,13 @@ docker --version | grep '19.[0-9]' || exit 1
 cat <<EOF
 ==> test docker build
 EOF
-/usr/local/bin/config.sh
 echo "FROM alpine" | docker build -t test -
 docker run test
+
+cat > test.erl <<EOF
+-module(test).
+-export([main/1]).
+main(_) -> io:format("==> Hello World!~n").
+EOF
+erlc test.erl
+escript test.erl

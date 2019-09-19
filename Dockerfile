@@ -1,12 +1,14 @@
 FROM centos
 
 ##
-## config docker and docker-in-docker
-RUN set -e \
-	&& curl -fsSL get.docker.com -o get-docker.sh \
-	&& sh get-docker.sh \
-	&& curl -o /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/master/hack/dind"  \
-	&& chmod +x /usr/local/bin/dind
+## config docker-in-docker
+RUN set -eu \
+  && yum-config-manager --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo \
+  && yum install -y \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io
 
 COPY src/config-docker.sh /usr/local/bin/
 COPY src/config.sh /usr/local/bin/
@@ -27,3 +29,8 @@ RUN set -eu \
    && curl -O https://bootstrap.pypa.io/get-pip.py \
    && python3.6 get-pip.py \
    && pip install awscli
+
+COPY --from=fogfish/erlang-centos /usr/local/otp /usr/local/otp
+ENV PATH /usr/local/otp/bin:$PATH
+
+ENTRYPOINT [ "/usr/local/bin/config.sh" ]
