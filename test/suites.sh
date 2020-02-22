@@ -7,6 +7,11 @@ EOF
 node --version | grep 'v10' || exit 1
 
 cat <<EOF
+==> test yarn 1.21.x
+EOF
+yarn --version | grep '1.21.[0-9]' || exit 1
+
+cat <<EOF
 ==> test typescript 3.x
 EOF
 tsc --version | grep '3.[0-9]' || exit 1
@@ -17,14 +22,14 @@ EOF
 ts-node --version | grep 'v8' || exit 1
 
 cat <<EOF
-==> test aws-cdk 1.14.x
+==> test aws-cdk 1.25.x
 EOF
-cdk --version | grep '1.14.[0-9]' || exit 1
+cdk --version | grep '1.25.[0-9]' || exit 1
 
 cat <<EOF
-==> test aws-cli 1.16.x
+==> test aws-cli 1.18.x
 EOF
-aws --version | grep 'aws-cli/1.16.[0-9]' || exit 1
+aws --version | grep 'aws-cli/1.18.[0-9]' || exit 1
 aws --version | grep 'Python/3.6.[0-9]' || exit 1
 
 cat <<EOF

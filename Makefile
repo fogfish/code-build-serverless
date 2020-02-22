@@ -1,4 +1,4 @@
-.PHONY: all build test publish
+.PHONY: all build test publish clean
 
 APP ?= serverless
 ORG ?= code-build
@@ -14,6 +14,10 @@ all: build test publish
 build:
 	@docker build -t ${IID} .
 	@docker tag ${IID} ${LOCAL}
+
+clean:
+	-@docker rmi -f ${LOCAL}
+	-@docker rmi -f ${IID}
 
 test:
 	@docker build -t ${TEST} test

@@ -18,13 +18,15 @@ COPY src/config.sh /usr/local/bin/
 RUN set -eu \
    && curl --silent --location https://rpm.nodesource.com/setup_10.x | bash - \
    && yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
+   && curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo \
    && yum install -y \
       nodejs \
+      yarn \
       git \
       autoconf \
       automake \
       make \
-      python36u \
+      python36 \
    && npm install -g typescript ts-node aws-cdk \
    && curl -O https://bootstrap.pypa.io/get-pip.py \
    && python3.6 get-pip.py \
